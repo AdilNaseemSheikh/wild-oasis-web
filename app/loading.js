@@ -1,7 +1,8 @@
 import React from "react";
+import Spinner from "@/app/_components/Spinner";
 
 function Loading() {
-  return <p>loading...</p>;
+  return <Spinner />;
 }
 
 export default Loading;
