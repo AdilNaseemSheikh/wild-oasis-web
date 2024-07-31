@@ -10,6 +10,9 @@ const nextConfig = {
       },
     ],
   },
+  // we do this to export our site as static site. If our app still contains some routes that
+  // do something which results into dynamic rendering, then we will get error.
+  // output: "export",
 };
 
 export default nextConfig;

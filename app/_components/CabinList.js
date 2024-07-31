@@ -1,8 +1,11 @@
 import React from "react";
 import CabinCard from "./CabinCard";
 import { getCabins } from "../_lib/data-service";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function CabinList() {
+  noStore();
+  // this is not using fetch api so to opt out of caching, we need to use noStore function
   const cabins = await getCabins();
 
   if (!cabins.length) return null;

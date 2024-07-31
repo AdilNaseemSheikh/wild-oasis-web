@@ -1,35 +1,30 @@
-import { getCabin } from "@/app/_lib/data-service";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-
-// PLACEHOLDER DATA
-// const cabin = {
-//   id: 89,
-//   name: "001",
-//   maxCapacity: 2,
-//   regularPrice: 250,
-//   discount: 0,
-//   description:
-//     "Discover the ultimate luxury getaway for couples in the cozy wooden cabin 001. Nestled in a picturesque forest, this stunning cabin offers a secluded and intimate retreat. Inside, enjoy modern high-quality wood interiors, a comfortable seating area, a fireplace and a fully-equipped kitchen. The plush king-size bed, dressed in fine linens guarantees a peaceful nights sleep. Relax in the spa-like shower and unwind on the private deck with hot tub.",
-//   image:
-//     "https://dclaevazetcjjkrzczpc.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg",
-// };
 
 export async function generateMetadata({ params }) {
   const { cabinId } = params;
   const cabin = await getCabin(cabinId);
   if (!cabin) notFound();
-  
+
   const { name } = cabin;
   return {
     title: `Cabin: ${name}`,
   };
 }
 
+export async function generateStaticParams() {
+  // we return array of object with the param name so that our page with dynamic
+  // param is still statically rendered. Then will enable us to export our entire
+  // app as static site and deploy easily on any static hosting provider
+  const cabins = await getCabins();
+  const ids = cabins.map((cabin) => ({ cabinId: String(cabin.id) }));
+  return ids;
+}
+
 // page associated with dynamic route sagment,
 // just like this one, [cabinId], will get access to params prop
-
 export default async function Page({ params }) {
   const { cabinId } = params;
   const cabin = await getCabin(cabinId);

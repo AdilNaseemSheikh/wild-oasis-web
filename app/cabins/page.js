@@ -6,6 +6,12 @@ export const metadata = {
   title: "Cabins",
 };
 
+// disable data cache
+// export const revalidate = 0;
+
+// ISR, fetch new data every hour(in seconds)
+// export const revalidate = 3600; // page level, but can be in individual component level which actually fetches
+
 export default function Page() {
   return (
     <div>
