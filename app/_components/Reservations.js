@@ -2,11 +2,18 @@ import React from "react";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
 import { getBookedDatesByCabinId, getSettings } from "../_lib/data-service";
+import { auth } from "../_lib/auth";
+import LoginMessage from "./LoginMessage";
 
 async function Reservations({ cabin }) {
   // fetching data for date selector and resrevation here cuz it is server comp. and they are client comp.
-  const settings = await getSettings();
-  const bookedDates = await getBookedDatesByCabinId(cabin.id);
+
+  const [settings, bookedDates] = await Promise.all([
+    getSettings(),
+    getBookedDatesByCabinId(cabin.id),
+  ]);
+
+  const session = await auth();
 
   return (
     <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
@@ -15,7 +22,11 @@ async function Reservations({ cabin }) {
         bookedDates={bookedDates}
         cabin={cabin}
       />
-      <ReservationForm cabin={cabin} />
+      {session?.user ? (
+        <ReservationForm cabin={cabin} user={session.user} />
+      ) : (
+        <LoginMessage />
+      )}
     </div>
   );
 }
