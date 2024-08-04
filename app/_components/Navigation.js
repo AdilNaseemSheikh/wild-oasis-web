@@ -5,8 +5,7 @@ export default async function Navigation() {
   // this authentication works with cookies and headers. So it makes our entire route dynami.
   // As this component is on every page, it makes every page dynamic
   const session = await auth();
-  console.log(session);
-  
+
   // there is also a way to use this auth() on client component
   // but it makes more sense to deal with logged in/out users on server
 
