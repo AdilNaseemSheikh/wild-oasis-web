@@ -3,7 +3,7 @@ import { supabase } from "./supabase";
 
 /////////////
 // GET
-  
+
 export async function getCabin(id) {
   const { data, error } = await supabase
     .from("cabins")
@@ -152,7 +152,7 @@ export async function getCountries() {
 /////////////
 // CREATE
 
-export async function createGuest(newGuest) {  
+export async function createGuest(newGuest) {
   const { data, error } = await supabase.from("guests").insert([newGuest]);
 
   if (error) {

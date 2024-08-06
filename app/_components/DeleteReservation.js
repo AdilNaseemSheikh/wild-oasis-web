@@ -1,16 +1,16 @@
 "use client";
 import { TrashIcon } from "@heroicons/react/24/solid";
-import { deleteReservation } from "../_lib/actions";
 import { useTransition } from "react";
 import SpinnerMini from "./SpinnerMini";
 
-function DeleteReservation({ bookingId }) {
+function DeleteReservation({ bookingId, onDelete }) {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
     // this is the recipe we need to indicate loading if we call SA directly from a button, not form submission
     confirm("Are you sure you want to delete this Reservation?");
-    startTransition(() => deleteReservation(bookingId));
+    // startTransition(() => deleteReservation(bookingId));
+    startTransition(() => onDelete(bookingId));
   };
 
   return (
